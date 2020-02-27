@@ -17,7 +17,6 @@ class Appsearchbar extends Component {
             this.checkIfEmpty();
         });    
         //TODO WHY IS THIS THEN?
-        console.log(this.props.books)
     }
 
     checkIfEmpty() {
@@ -34,7 +33,8 @@ class Appsearchbar extends Component {
                 <div className="col-12">
                     <input className="form-control mr-sm-2 col-12" type="search" placeholder="Search your book" aria-label="Search" id="menuFilter" onChange={this.searchFilter}/>
                 </div>
-                <Appbooks searchValue={this.state.searchValue} books={this.props.books}/>
+                <Appbooks searchValue={this.state.searchValue} books={this.props.books} langValue={this.props.langValue}/>
+                {console.log(this.props.langValue + ' language in search barpage')}
             </div>
         )
     }
