@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Appheader from './Appheader';
 import './App.css';
+import Appfooter from './Appfooter';
+import Appsearchbar from './Appsearchbar';
+import Appwarning from './Appwarning';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        books: [],
+    };
+  }
+
+  componentDidMount() {  
+    if (document.getElementById("langEn").checked) {
+        var url = "https://api.myjson.com/bins/zyv02";
+        this.setState({
+            lang: 'en',
+        });
+    };
+    if (document.getElementById("langEs").checked) {
+        var url = "https://api.myjson.com/bins/1h3vb3";
+        this.setState({
+            lang: 'en',
+        });
+    };
+    fetch(url)
+    .then(res => res.json())
+    .then(data => this.setState({ books: data.books }))
+    .catch(error => console.log(error));
+  }
+
+  langValue() {
+    if (document.getElementById('langEn').checked) {
+      console.log('english');
+      var langValue = 'en';
+    };
+    if (document.getElementById('langEs').checked) {
+        console.log('spanish');
+        var langValue = 'es';
+    };
+  }
+
+  render(){
+    return (
+      <div>
+        <Appheader langValue={this.langValue} onClick={this.langValue}/>
+        <main className="container" id="mainContainer">
+          <div className="d-flex flex-wrap">
+            <Appwarning />
+            <Appsearchbar books={this.state.books}/>
+          </div>
+        </main>
+        <Appfooter />
+      </div>
+    );
+  }
 }
 
 export default App;
